@@ -1,0 +1,67 @@
+class Solution {
+
+    public int merge(int arr[], int l, int mid, int h) {
+        int count = 0;
+        int left = l;
+        int right = mid + 1;
+
+        for (int i = l; i <= mid; i++) {
+            while (right <= h && arr[i] > ((long) arr[right] * 2)) {
+                right++;
+            }
+
+            count += (right - (mid + 1));
+
+        }
+
+        left = l;
+        right = mid + 1;
+
+        int temparr[] = new int[h - l + 1];
+        int index = 0;
+        while (left <= mid && right <= h) {
+            if (arr[left] <= arr[right]) {
+                temparr[index++] = arr[left++];
+            } else {
+                temparr[index++] = arr[right++];
+
+            }
+        }
+
+        while (left <= mid) {
+
+            temparr[index++] = arr[left++];
+
+        }
+
+        while (right <= h) {
+
+            temparr[index++] = arr[right++];
+
+        }
+
+        for (int i = l; i <= h; i++) {
+            arr[i] = temparr[i - l];
+        }
+
+        return count;
+    }
+
+    public int mergeSort(int arr[], int low, int high) {
+
+        if (low >= high)
+            return 0;
+        int mid = (low + high) / 2;
+        int cnt = mergeSort(arr, low, mid);
+        cnt += mergeSort(arr, mid + 1, high);
+        cnt += merge(arr, low, mid, high);
+
+        return cnt;
+
+    }
+
+    public int reversePairs(int[] nums) {
+
+        return mergeSort(nums, 0, nums.length - 1);
+    }
+}

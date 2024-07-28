@@ -1,0 +1,46 @@
+class Solution {
+
+    public String generat(String s)
+    {
+
+        int count[]=new int[26];
+
+        for(int i=0;i<s.length();i++)
+        {
+             count[s.charAt(i)-'a']++;
+        }
+
+        StringBuilder str=new StringBuilder();
+
+        for(int i=0;i<26;i++)
+        {
+            if(count[i]>0)
+            {
+                str.append(String.valueOf((char)i+'a').repeat(count[i]));
+            }
+        }
+
+        return str.toString();
+    }
+    public List<List<String>> groupAnagrams(String[] strs) {
+        
+
+        HashMap<String,List<String>>map=new HashMap<>();
+
+
+        for(String s:strs)
+        {
+
+            String news=generat(s);
+
+            if(!map.containsKey(news))
+            {
+                map.put(news,new ArrayList<>());
+            }
+
+            map.get(news).add(s);
+        }
+
+        return new ArrayList<>(map.values());
+    }
+}

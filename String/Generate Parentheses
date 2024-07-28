@@ -1,0 +1,35 @@
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        
+        List<String>list=new ArrayList<>();
+           
+       String ans="";
+           solve(n,0,0,list,ans);
+
+           return list;
+
+        
+    }
+
+    public void solve(int n,int left,int right, List<String>list,String ans)
+    {
+        if(left==n && right==n)
+        {
+            list.add(ans);
+            return;
+        }
+
+        if(left<n)
+        {
+           
+            solve(n,left+1,right,list,ans+'(');
+           
+        }
+        if(right<left)
+        {
+           
+            solve(n,left,right+1,list,ans+')');
+        
+        }
+    }
+}

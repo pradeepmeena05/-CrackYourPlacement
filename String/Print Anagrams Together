@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<String>> Anagrams(String[] string_list) {
+        // Code here
+          HashMap<String,List<String>>map=new HashMap<>();
+          
+        for(String s:string_list)
+        {
+            char ch[]=s.toCharArray();
+            Arrays.sort(ch);
+            
+            String str=new String(ch);
+            
+            if(!map.containsKey(str))
+            {
+                map.put(str,new ArrayList<>());
+            }
+            
+            map.get(str).add(s);
+        }
+        
+        return new ArrayList<>(map.values());
+    }
+}

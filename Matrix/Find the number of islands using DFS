@@ -1,0 +1,68 @@
+class Pair{
+    int f;
+    int s;
+    public Pair(int first,int second){
+        this.f = first;
+        this.s = second;
+    }
+}
+
+
+class Solution {
+
+    public void dfs(int ro,int co,char [][]grid,int visi[][],int []delrow,int []delcol,int n,int m ){
+    
+     visi[ro][co]=1;
+
+     Queue<Pair>q=new LinkedList<Pair>();
+     q.add(new Pair(ro,co));
+
+     while(!q.isEmpty())
+     {
+          int r = q.peek().f;
+
+         int c = q.peek().s;
+         q.remove();
+
+         for(int i=0;i<4;i++)
+         {
+            int nrow=r+delrow[i];
+             int ncol=c+delcol[i];
+
+             if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && visi[nrow][ncol]==0 && grid[nrow][ncol]=='1')
+             {
+                   visi[nrow][ncol]=1;
+                   q.add(new Pair(nrow,ncol));
+             }
+         }
+     }
+
+
+
+    }
+    public int numIslands(char[][] grid) {
+        
+
+        int n=grid.length;
+        int m=grid[0].length;
+
+        int visi[][]=new int[n][m];
+
+        int delrow[]={-1,0,+1,0};
+        int delcol[]={0,+1,0,-1};
+       int count=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(visi[i][j]==0&& grid[i][j]=='1')
+                {
+                    count++;
+
+                    dfs(i,j,grid,visi,delrow,delcol,n,m);
+                }
+            }
+        }
+    return count;
+    }
+}
